@@ -1,0 +1,67 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Arbeitszeitaufschreiben.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="using:Arbeitszeitaufschreiben"
+        mc:Ignorable="d"
+        d:DesignWidth="600"
+        d:DesignHeight="800"
+        x:Class="Arbeitszeitaufschreiben.Views.MainWindow"
+        x:Name="self"
+        DataContext="{x:Reference self}"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Arbeitszeit-Tracker">
+                        
+                        
+                            <Grid Margin="10, 5, 10, 0">
+                                <StackPanel x:Name="MainStackPanel">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Border Margin="5" CornerRadius="5" BorderBrush="LightGray" BorderThickness="1" Background="Navy">
+                                            <TextBlock Margin="5" Text="Arbeitszeit Eintragen" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Grid Grid.Row="1" ShowGridLines="False" Margin="5"
+                                              ColumnDefinitions="150, 150, 150, 150"
+                                              RowDefinitions="Auto, Auto, Auto, Auto">
+                                            <Label  Grid.Row="0" Grid.Column="0">Startzeit</Label>
+                                            <Label Grid.Row="0" Grid.Column="1">Endzeit</Label>
+                                            <Label Grid.Row="0" Grid.Column="2">Mittagspause</Label>
+                                            <Label Grid.Row="0" Grid.Column="3">Datum</Label>
+                                            <TextBox Grid.Row="1" Margin="0, 20, 0, 0" Width="100" Watermark="XX:XX" HorizontalAlignment="Left" x:Name="Startzeit" Grid.Column="0" />
+                                            <TextBox Grid.Row="1" Margin="0, 20, 0, 0" Width="100" Watermark="XX:XX" HorizontalAlignment="Left" x:Name="Endzeit" Grid.Column="1" />
+                                            <TextBox Grid.Row="1" Margin="0, 20, 0, 0" Width="100" Watermark="XX:XX" HorizontalAlignment="Left" x:Name="Mittagspause" Grid.Column="2" />
+                                            <TextBox Grid.Row="1" Margin="0, 20, 0, 0" Width="100" Watermark="DD.MM" HorizontalAlignment="Left" x:Name="Datum" Grid.Column="3" />
+                                            <Button Grid.Row="3" Margin="5, 40, 0, 0" Grid.Column="1" Content="Speichern" Click="Speichern" />
+                                            <Button Grid.Row="3" Margin="5, 40, 0, 0" Grid.Column="2" Content="Abbrechen" Click="Abbrechen"/>
+                                        </Grid>
+                                        <Button Grid.Row="4" Margin="235, 40, 0, 0" Content="Übersicht" Click="Uebersicht_Click"/>
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel x:Name="UebersichtStackPanel" IsVisible="False">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" Margin="5" CornerRadius="5" BorderBrush="LightGray" BorderThickness="1" Background="Navy">
+                                            <TextBlock Margin="5" Text="Arbeitszeit Übersicht" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        
+                                       
+
+                        
+                                        <Button Grid.Row="4" Margin="235, 40, 0, 0" Content="Zurück" Click="zurück_Click"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </Window>

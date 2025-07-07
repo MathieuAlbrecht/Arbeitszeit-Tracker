@@ -1,0 +1,46 @@
+[
+  {
+    "Startzeit": 480,
+    "Endzeit": 720,
+    "Pause": 60,
+    "Gesamt": 180,
+    "Datum": "05.07",
+    "StartzeitString": "08:00",
+    "EndzeitString": "12:00",
+    "PauseString": "01:00",
+    "GesamtString": "03:00"
+  },
+  {
+    "Startzeit": 420,
+    "Endzeit": 720,
+    "Pause": 60,
+    "Gesamt": 240,
+    "Datum": "06.07",
+    "StartzeitString": "07:00",
+    "EndzeitString": "12:00",
+    "PauseString": "01:00",
+    "GesamtString": "04:00"
+  },
+  {
+    "Startzeit": 420,
+    "Endzeit": 930,
+    "Pause": 150,
+    "Gesamt": 360,
+    "Datum": "07.07",
+    "StartzeitString": "07:00",
+    "EndzeitString": "15:30",
+    "PauseString": "02:30",
+    "GesamtString": "06:00"
+  },
+  {
+    "Startzeit": 600,
+    "Endzeit": 1200,
+    "Pause": 120,
+    "Gesamt": 480,
+    "Datum": "09.09",
+    "StartzeitString": "10:00",
+    "EndzeitString": "20:00",
+    "PauseString": "02:00",
+    "GesamtString": "08:00"
+  }
+]

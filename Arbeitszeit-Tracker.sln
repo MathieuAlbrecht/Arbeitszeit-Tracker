@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbeitszeit-Tracker", "Arbeitszeit-Tracker\Arbeitszeit-Tracker.csproj", "{E61E27C9-9903-4F88-8115-22734C2EDB78}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E61E27C9-9903-4F88-8115-22734C2EDB78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E61E27C9-9903-4F88-8115-22734C2EDB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E61E27C9-9903-4F88-8115-22734C2EDB78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E61E27C9-9903-4F88-8115-22734C2EDB78}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
