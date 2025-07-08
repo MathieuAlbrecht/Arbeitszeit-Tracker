@@ -1,88 +1,96 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using Avalonia.Controls;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
+using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Threading;
+using Arbeitszeitaufschreiben;
+using Arbeitszeitaufschreiben.ViewModels;
 
-namespace Arbeitszeitaufschreiben.Views;
-
-public partial class MainWindow : Window, INotifyPropertyChanged
+namespace Arbeitszeitaufschreiben.Views
 {
-    public new event PropertyChangedEventHandler? PropertyChanged;
-    
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    public partial class MainWindow : Window
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-    
-    public MainWindow()
-    {
-        InitializeComponent();
-        DataContext = this; 
-        Uebersicht_Click(null, null); 
-    }
+        private readonly string _jsonFilePath;
+        private MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext!;
 
-
-    public ObservableCollection<ArbeitszeitEintrag> Eintraege { get; set; } = new();
-
-
-    private void Speichern(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        string? start = Startzeit.Text;
-        string? end = Endzeit.Text;
-        string? pause = Mittagspause.Text;
-        string? datum = Datum.Text;
-
-        int startzeitMinuten = Convert.ToInt32(start!.Split(':')[0]) * 60 + Convert.ToInt32(start.Split(':')[1]);
-        int endzeitMinuten = Convert.ToInt32(end!.Split(':')[0]) * 60 + Convert.ToInt32(end.Split(':')[1]);
-        int pauseMinuten = Convert.ToInt32(pause!.Split(':')[0]) * 60 + Convert.ToInt32(pause.Split(':')[1]);
-        int gesamtMinuten = endzeitMinuten - startzeitMinuten - pauseMinuten;
-
-        var neuerEintrag = new ArbeitszeitEintrag
+        public MainWindow()
         {
-            Startzeit = startzeitMinuten,
-            Endzeit = endzeitMinuten,
-            Pause = pauseMinuten,
-            Gesamt = gesamtMinuten,
-            Datum = datum
-        };
+            InitializeComponent();
+            DataContext = new MainWindowViewModel();
 
-        string? projectRoot = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
-        string pfad = Path.Combine(projectRoot!, "Arbeitszeit-Tracker.json");
+            string? projectRoot = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
+            _jsonFilePath = Path.Combine(projectRoot!, "Arbeitszeitaufschreiben.json");
+        }
 
-        List<ArbeitszeitEintrag> eintraege = File.Exists(pfad)
-            ? JsonSerializer.Deserialize<List<ArbeitszeitEintrag>>(File.ReadAllText(pfad)) ?? new List<ArbeitszeitEintrag>()
-            : new List<ArbeitszeitEintrag>();
+        private void Speichern(object? sender, RoutedEventArgs e)
+        {
+            string? start = Startzeit.Text;
+            string? end = Endzeit.Text;
+            string? pause = Mittagspause.Text;
+            string? datum = Datum.Text;
 
-        eintraege.Add(neuerEintrag);
+            if (string.IsNullOrWhiteSpace(start) || string.IsNullOrWhiteSpace(end) || string.IsNullOrWhiteSpace(pause) || string.IsNullOrWhiteSpace(datum))
+                return;
 
-        File.WriteAllText(pfad, JsonSerializer.Serialize(eintraege, new JsonSerializerOptions { WriteIndented = true }));
-    }
+            int startzeitMinuten = Convert.ToInt32(start.Split(':')[0]) * 60 + Convert.ToInt32(start.Split(':')[1]);
+            int endzeitMinuten = Convert.ToInt32(end.Split(':')[0]) * 60 + Convert.ToInt32(end.Split(':')[1]);
+            int pauseMinuten = Convert.ToInt32(pause.Split(':')[0]) * 60 + Convert.ToInt32(pause.Split(':')[1]);
+            int gesamtMinuten = endzeitMinuten - startzeitMinuten - pauseMinuten;
 
-    private void Abbrechen(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        
-    }
-    
-   
-    private void Uebersicht_Click(object? sender, RoutedEventArgs? e)
-    {
-        MainStackPanel.IsVisible = false;
-        UebersichtStackPanel.IsVisible = true;
+            var neuerEintrag = new ArbeitszeitEintrag
+            {
+                Startzeit = startzeitMinuten,
+                Endzeit = endzeitMinuten,
+                Pause = pauseMinuten,
+                Gesamt = gesamtMinuten,
+                Datum = datum
+            };
 
-        
-    }
+            // Load, add, and save
+            List<ArbeitszeitEintrag> eintraege = File.Exists(_jsonFilePath)
+                ? JsonSerializer.Deserialize<List<ArbeitszeitEintrag>>(File.ReadAllText(_jsonFilePath)) ?? new List<ArbeitszeitEintrag>()
+                : new List<ArbeitszeitEintrag>();
 
-    
-    private void zurück_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        MainStackPanel.IsVisible = true;
-        UebersichtStackPanel.IsVisible = false;
+            eintraege.Add(neuerEintrag);
+
+            File.WriteAllText(_jsonFilePath, JsonSerializer.Serialize(eintraege, new JsonSerializerOptions { WriteIndented = true }));
+
+            // Update ViewModel collection
+            ViewModel.Arbeitszeiten.Clear();
+            foreach (var eintrag in eintraege)
+                ViewModel.Arbeitszeiten.Add(eintrag);
+        }
+
+        private void Abbrechen(object? sender, RoutedEventArgs e)
+        {
+            Startzeit.Text = "";
+            Endzeit.Text = "";
+            Mittagspause.Text = "";
+            Datum.Text = "";
+        }
+
+        private void Uebersicht_Click(object? sender, RoutedEventArgs e)
+        {
+            MainStackPanel.IsVisible = false;
+            UebersichtStackPanel.IsVisible = true;
+
+            if (File.Exists(_jsonFilePath))
+            {
+                string jsonText = File.ReadAllText(_jsonFilePath);
+                var arbeitszeiteintraege = JsonSerializer.Deserialize<List<ArbeitszeitEintrag>>(jsonText) ?? new List<ArbeitszeitEintrag>();
+                ViewModel.Arbeitszeiten.Clear();
+                foreach (var eintrag in arbeitszeiteintraege)
+                {
+                    ViewModel.Arbeitszeiten.Add(eintrag);
+                }
+            }
+        }
+
+        private void zurück_Click(object? sender, RoutedEventArgs e)
+        {
+            MainStackPanel.IsVisible = true;
+            UebersichtStackPanel.IsVisible = false;
+        }
     }
 }

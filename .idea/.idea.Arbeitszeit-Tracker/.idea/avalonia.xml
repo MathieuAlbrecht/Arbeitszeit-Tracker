@@ -3,6 +3,8 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="Arbeitszeit-Tracker/MainViewModel.axaml" value="Arbeitszeit-Tracker/Arbeitszeit-Tracker.csproj" />
+        <entry key="Arbeitszeit-Tracker/Views/MainWindow.axaml" value="Arbeitszeit-Tracker/Arbeitszeit-Tracker.csproj" />
         <entry key="Arbeitszeitaufschreiben/App.axaml" value="Arbeitszeitaufschreiben/Arbeitszeitaufschreiben.csproj" />
         <entry key="Arbeitszeitaufschreiben/Views/MainWindow.axaml" value="Arbeitszeitaufschreiben/Arbeitszeitaufschreiben.csproj" />
         <entry key="Arbeitszeitaufschreiben/Views/UebersichtView.axaml" value="Arbeitszeitaufschreiben/Arbeitszeitaufschreiben.csproj" />

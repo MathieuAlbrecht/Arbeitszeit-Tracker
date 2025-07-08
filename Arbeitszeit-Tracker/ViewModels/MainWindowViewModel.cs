@@ -1,6 +1,9 @@
-﻿namespace Arbeitszeitaufschreiben.ViewModels;
+﻿using System.Collections.ObjectModel;
 
-public partial class MainWindowViewModel : ViewModelBase
+namespace Arbeitszeitaufschreiben.ViewModels
 {
-    public string Greeting { get; } = "Welcome to Avalonia!";
+    public partial class MainWindowViewModel : ViewModelBase
+    {
+        public ObservableCollection<ArbeitszeitEintrag> Arbeitszeiten { get; } = new();
+    }
 }

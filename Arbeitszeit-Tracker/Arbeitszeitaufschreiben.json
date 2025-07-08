@@ -42,5 +42,27 @@
     "EndzeitString": "20:00",
     "PauseString": "02:00",
     "GesamtString": "08:00"
+  },
+  {
+    "Startzeit": 300,
+    "Endzeit": 720,
+    "Pause": 60,
+    "Gesamt": 360,
+    "Datum": "07.07",
+    "StartzeitString": "05:00",
+    "EndzeitString": "12:00",
+    "PauseString": "01:00",
+    "GesamtString": "06:00"
+  },
+  {
+    "Startzeit": 300,
+    "Endzeit": 720,
+    "Pause": 60,
+    "Gesamt": 360,
+    "Datum": "07.07",
+    "StartzeitString": "05:00",
+    "EndzeitString": "12:00",
+    "PauseString": "01:00",
+    "GesamtString": "06:00"
   }
 ]
